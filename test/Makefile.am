@@ -15,7 +15,10 @@ AM_CPPFLAGS = \
 LDADD = \
 	$(top_srcdir)/src/libmod_websocket.la \
 	$(top_srcdir)/test/stub/libstub.la \
-	$(top_srcdir)/contrib/gtest-1.7.0/lib/libgtest.la
+	$(top_srcdir)/contrib/gtest-1.7.0/lib/libgtest.la 
+
+AM_LDFLAGS=	\
+	-Wl,--no-as-needed
 
 noinst_PROGRAMS = \
 	mod_websocket_base64_encode_test \
