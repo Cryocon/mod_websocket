@@ -160,28 +160,28 @@ mod_websocket_errno_t mod_websocket_handshake_check_request(handler_ctx *hctx) {
     /* store necessary headers */
     for (i = hdrs->used; i > 0; i--) {
         hdr = (data_string *)hdrs->data[i - 1];
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Host"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Host"))) {
             handshake->host = hdr->value;
         }
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Version"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Version"))) {
             version_hdr_value = hdr->value;
         }
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Origin")) ||
-            buffer_is_equal_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Origin"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Origin")) ||
+            buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Origin"))) {
             handshake->origin = hdr->value;
         }
 
 #ifdef	_MOD_WEBSOCKET_SPEC_IETF_00_
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key1"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key1"))) {
             handshake->key1 = hdr->value;
         }
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key2"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key2"))) {
             handshake->key2 = hdr->value;
         }
 #endif	/* _MOD_WEBSOCKET_SPEC_IETF_00_ */
 
 #ifdef	_MOD_WEBSOCKET_SPEC_RFC_6455_
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("Sec-WebSocket-Key"))) {
             handshake->key = hdr->value;
         }
 #endif	/* _MOD_WEBSOCKET_SPEC_RFC_6455_ */
@@ -456,13 +456,13 @@ static void append_x_forwarded_headers(handler_ctx *hctx) {
     hdrs = hctx->con->request.headers;
     for (i = hdrs->used; i > 0; i--) {
         hdr = (data_string *)hdrs->data[i - 1];
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("X-Forwarded-Proto"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("X-Forwarded-Proto"))) {
             x_forwarded_proto = hdr;
         }
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("X-Forwarded-For"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("X-Forwarded-For"))) {
             x_forwarded_for = hdr;
         }
-        if (buffer_is_equal_string(hdr->key, CONST_STR_LEN("X-Forwarded-Port"))) {
+        if (buffer_is_equal_caseless_string(hdr->key, CONST_STR_LEN("X-Forwarded-Port"))) {
             x_forwarded_port = hdr;
         }
     }

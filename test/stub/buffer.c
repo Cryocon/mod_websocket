@@ -533,6 +533,22 @@ int buffer_is_equal_string(buffer *a, const char *s, size_t b_len) {
 	return buffer_is_equal(a, &b);
 }
 
+int buffer_is_equal_caseless(buffer *a, buffer *b) {
+	if (a->used != b->used) return 0;
+	if (a->used == 0) return 1;
+
+	return (0 == strcasecmp(a->ptr, b->ptr));
+}
+
+int buffer_is_equal_caseless_string(buffer *a, const char *s, size_t b_len) {
+	buffer b;
+
+	b.ptr = (char *)s;
+	b.used = b_len + 1;
+
+	return buffer_is_equal_caseless(a, &b);
+}
+
 /* simple-assumption:
  *
  * most parts are equal and doing a case conversion needs time
@@ -586,7 +602,6 @@ int buffer_caseless_compare(const char *a, size_t a_len, const char *b, size_t b
 	/* if a is shorter then b, then b is larger */
 	return (a_len - b_len);
 }
-
 
 /**
  * check if the rightmost bytes of the string are equal.
